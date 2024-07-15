@@ -18,7 +18,7 @@ try
 
 	//* Inicializa a aplicação e prepara os dispositivos de saída
 	$app = new App;
-	$kernel = $app->make($bootstrap->makeKernelClass());
+	$kernel = $app->make($bootstrap->makeKernelClass(), $bootstrap->args);
 	$kernel->output = $console;
 
 	// Executa a aplicação

@@ -41,11 +41,12 @@ class App
 	/**
 	 * Cria o núcleo principal da aplicação.
 	 * @param string $kernelClass
+	 * @param array $args
 	 * @return Kernel
 	 */
-	public function make(string $kernelClass) : Kernel
+	public function make(string $kernelClass, array $args = []) : Kernel
 	{
-		return new $kernelClass($this);
+		return new $kernelClass($this, $args);
 	}
 
 

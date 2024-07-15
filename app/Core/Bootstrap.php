@@ -45,6 +45,10 @@ class Bootstrap
 				'class'		=> VersionApplication::class,
 				'params' 	=> [ '--version', '-v', '-V' ],
 			],
+            [
+				'class'		=> ReadApplication::class,
+				'params' 	=> [ '--read', '-r' ],
+			],
         ];
 
 		foreach ($acceptedModes as $acceptedMode)

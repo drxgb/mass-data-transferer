@@ -22,8 +22,21 @@ abstract class Kernel
 
 
 	public function __construct(
-		private App $app
+		private App $app,
+		array $args
 	)
+	{
+		$this->init($args);
+	}
+
+
+	/**
+	 * Inicializa os membros.
+	 *
+	 * @param array $args
+	 * @return void
+	 */
+	protected function init(array $args) : void
 	{}
 
 
