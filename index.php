@@ -3,32 +3,34 @@
 use App\App;
 use App\Cli\ConsoleOutput;
 use App\Core\Bootstrap;
-use App\Core\HelpApplication;
+
+
+// Inicializa o autoloader
+require __DIR__ . '/vendor/autoload.php';
+
+// Inicializa o console
+$console = new ConsoleOutput;
 
 try
 {
-	// Inicializa o autoloader
-	require __DIR__ . '/vendor/autoload.php';
-
 	// Recebe os argumentos do programa
 	$bootstrap = new Bootstrap($argv);
 
-	// Inicializa o console
-	$output = new ConsoleOutput;
-
-	//* Inicializa a aplicação e prepara os dispositivos de entrada e saída
+	//* Inicializa a aplicação e prepara os dispositivos de saída
 	$app = new App;
-	$kernel = $app->make(HelpApplication::class);
-	$kernel->output = $output;
+	$kernel = $app->make($bootstrap->makeKernelClass());
+	$kernel->output = $console;
 
-	// Exectua a aplicação
+	// Executa a aplicação
 	$app->run($kernel);
 }
 catch (\Throwable $e)
 {
-	echo PHP_EOL;
-	echo 'ERROR: ' . $e->getMessage() . PHP_EOL;
-	echo 'Em: ' . $e->getFile() . PHP_EOL;
-	echo 'Linha: ' . $e->getLine() . PHP_EOL;
-	echo $e->getTraceAsString() . PHP_EOL . PHP_EOL;
+	$console->writeLine();
+	$console->writeLine($e->getMessage());
+	$console->writeLine("File: {$e->getFile()}");
+	$console->writeLine("Line: {$e->getLine()}");
+	$console->writeLine('Stack Trace:');
+	$console->writeLine($e->getTraceAsString());
+	$console->writeLine();
 }

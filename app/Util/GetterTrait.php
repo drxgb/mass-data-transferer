@@ -23,6 +23,7 @@ trait GetterTrait
 
 	/**
 	 * Recebe a lista de getters restritos.
+	 * 
 	 * @return array
 	 */
 	protected function restrictedGetters() : array

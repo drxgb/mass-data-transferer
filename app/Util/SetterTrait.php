@@ -25,6 +25,7 @@ trait SetterTrait
 
 	/**
 	 * Recebe a lista de setters restritos.
+	 * 
 	 * @return array
 	 */
 	protected function restrictedSetters() : array

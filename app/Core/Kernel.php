@@ -38,5 +38,10 @@ abstract class Kernel
 	}
 
 
+	/**
+	 * Executa um passo da aplicação.
+	 *
+	 * @return boolean Se for `true`, significa que o passo pode ser repetido.
+	 */
 	public abstract function loop() : bool;
 }

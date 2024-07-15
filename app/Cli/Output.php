@@ -7,6 +7,7 @@ interface Output
 {
 	/**
 	 * Escreve uma informação para o dispositivo de saída.
+	 * 
 	 * @param mixed $out
 	 * @return static
 	 */
@@ -15,14 +16,16 @@ interface Output
 
 	/**
 	 * Escreve uma linha para o dispoaitivo de saída.
+	 * 
 	 * @param mixed $out
 	 * @return static
 	 */
-	function writeLine(mixed $out) : static;
+	function writeLine(mixed $out = null) : static;
 
 
 	/**
 	 * Recebe o caractere para quebra de linha.
+	 * 
 	 * @return mixed
 	 */
 	function eol() : mixed;

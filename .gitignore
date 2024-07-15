@@ -3,4 +3,7 @@ config/*
 database/*
 storage/*
 vendor/*
+
+.editorconfig
+.env
 settings.json
