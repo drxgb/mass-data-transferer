@@ -3,7 +3,7 @@
 namespace App\Core;
 
 use App\Util\GetterTrait;
-
+use Dotenv\Dotenv;
 
 class Bootstrap
 {
@@ -16,8 +16,11 @@ class Bootstrap
 	private $args;
 
 
-	public function __construct(array &$args = [])
+	public function __construct(string $dir, array &$args = [])
 	{
+		$dotenv = Dotenv::createUnsafeImmutable($dir);
+		$dotenv->load();
+
 		$this->initArgs($args);
 	}
 
@@ -37,7 +40,7 @@ class Bootstrap
         }
 
         $acceptedModes = [
-            [ 
+            [
 				'class'		=> HelpApplication::class,
 				'params' 	=> [ '--help', '-h', '-H' ],
 			],

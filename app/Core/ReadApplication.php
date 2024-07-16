@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Core;
+use App\State\StartupState;
 
 
-class ReadApplication extends Kernel
+class ReadApplication extends StateableKernel
 {
 	use StartupTrait;
 
@@ -13,16 +14,16 @@ class ReadApplication extends Kernel
 	 */
 	public function boot() : bool
 	{
+		$this->assertInputExists();
+		$this->assertOutputExists();
+
+		$this->app->showTitle();
+		$this->output->writeLine('*** Read mode ***');
+		$this->output->writeLine('=================');
+		$this->output->writeLine();
+		$this->state = new StartupState($this);
+
 		return true;
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	public function loop() : bool
-	{
-		return false;
 	}
 
 

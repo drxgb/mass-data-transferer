@@ -10,6 +10,7 @@ class HelpApplication extends Kernel
 	 */
 	public function boot() : bool
 	{
+		$this->assertOutputExists();
 		return true;
 	}
 
@@ -28,7 +29,7 @@ class HelpApplication extends Kernel
 			$output->writeLine('Usage:');
 			$output->writeLine($help['usage']);
 			$output->writeLine();
-			
+
 			// Modos
 			$output->writeLine('Modes:');
 

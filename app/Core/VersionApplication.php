@@ -10,6 +10,7 @@ class VersionApplication extends Kernel
 	 */
 	public function boot() : bool
 	{
+		$this->assertOutputExists();
 		return true;
 	}
 

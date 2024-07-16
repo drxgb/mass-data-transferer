@@ -2,10 +2,15 @@
 
 namespace DB;
 
+use App\Util\GetterTrait;
+use DB\Driver\DatabaseDriver;
 use PDO;
 
 class Connection
 {
+	use GetterTrait;
+
+
 	/**
 	 * @var PDO
 	 */
@@ -13,45 +18,41 @@ class Connection
 
 
 	public function __construct(
-		private string $host,
-		private string $port,
-		private string $user,
-		private string $password,
-		private string $schema
+		private DatabaseDriver $driver
 	)
 	{}
 
 
 	/**
 	 * Tenta estabelecer uma conexão com o banco de dados.
-	 * @param bool $persistent
+	 *
+	 * @param array $options
 	 * @return PDO
 	 */
-	public function connect(bool $persistent = false) : PDO
+	public function connect(array $options = []) : PDO
 	{
-		try
-		{
-			$this->pdo = new PDO(
-				'mysql:host=' . $this->host . ';dbport=' . $this->port .';dbname=' . $this->schema,
-				$this->user,
-				$this->password,
-				[
-					PDO::ATTR_PERSISTENT => $persistent,
-				]
-			);
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
-		catch (\Exception $e)
-		{
-			echo $e->getMessage() . PHP_EOL;
-		}
-
-		return $this->pdo;
+		return $this->pdo = new PDO(
+			$this->driver->dsn(),
+			$this->driver->user,
+			$this->driver->password,
+			$options
+		);
 	}
 
 
-	public function get() : PDO
+	public function close() : void
 	{
-		return $this->pdo;
+		$this->pdo = null;
+	}
+
+
+	/**
+	 * @return array
+	 */
+	protected function restrictedGetters() : array
+	{
+		return [
+			'driver',
+		];
 	}
 }

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Cli\Input;
+use App\Cli\Output;
 use DB\Connection;
 use App\Core\Kernel;
 use App\Util\GetterTrait;
+use App\Contract\Runnable;
+use App\Core\VersionApplication;
 
-
-class App
+class App implements Runnable
 {
 	use GetterTrait;
 
@@ -15,7 +18,19 @@ class App
 	/**
 	 * @var Connection
 	 */
-	protected $db;
+	private $db;
+
+	/**
+	 * @var Kernel
+	 */
+	private $kernel;
+
+
+	public function __construct(
+		private Input $input,
+		private Output $output
+	)
+	{}
 
 
 	/**
@@ -44,24 +59,62 @@ class App
 	 * @param array $args
 	 * @return Kernel
 	 */
-	public function make(string $kernelClass, array $args = []) : Kernel
+	public function makeKernel(string $kernelClass, array $args = []) : Kernel
 	{
-		return new $kernelClass($this, $args);
+		$this->kernel = new $kernelClass($this, $args);
+		$this->kernel->input = $this->input;
+		$this->kernel->output = $this->output;
+
+		return $this->kernel;
 	}
 
 
 	/**
 	 * Executa a aplicação.
-	 * @param Kernel $kernel
 	 * @return void
 	 */
-	public function run(Kernel $kernel) : void
+	public function run() : void
 	{
-		if ($kernel->boot())
+		$kernel = $this->kernel;
+
+		if ($kernel)
 		{
-			while ($kernel->loop());
+			if ($kernel->boot())
+			{
+				while ($kernel->loop());
+			}
+
+			$kernel->close();
+		}
+	}
+
+
+	/**
+	 * Mostra o título do programa.
+
+	 * @return void
+	 */
+	public function showTitle() : void
+	{
+		$version = new VersionApplication($this);
+		$version->output = $this->output;
+		$version->runStep();
+	}
+
+
+	/**
+	 * Define uma nova conexão ao banco de dados.
+	 *
+	 * @param Connection $connection
+	 * @return void
+	 */
+	public function setConnection(Connection $connection) : void
+	{
+		if ($this->db)
+		{
+			$this->db->close();
 		}
 
-		$kernel->close();
+		$this->db = $connection;
 	}
 }

@@ -26,3 +26,33 @@ function config(string $key) : mixed
 
 	return $value;
 }
+
+
+/**
+ * Recebe o valor da variável de ambiente.
+ *
+ * @param string $name
+ * @param mixed $fallback
+ * @return mixed
+ */
+function env(string $name, mixed $fallback = null) : mixed
+{
+	$value = $_ENV[$name];
+	return $value ?: $fallback;
+}
+
+
+/**
+ * Recebe as chaves de argumento do programa.
+ *
+ * @return array
+ */
+function getProgramArgKeys() : array
+{
+	return [
+		'schema'	=> true,
+		'table'		=> true,
+		'column'	=> true,
+		'path'		=> false,
+	];
+}

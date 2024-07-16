@@ -1,6 +1,7 @@
 <?php
 
 use App\App;
+use App\Cli\ConsoleInput;
 use App\Cli\ConsoleOutput;
 use App\Core\Bootstrap;
 
@@ -9,28 +10,27 @@ use App\Core\Bootstrap;
 require __DIR__ . '/vendor/autoload.php';
 
 // Inicializa o console
-$console = new ConsoleOutput;
+$output = new ConsoleOutput;
+$input = new ConsoleInput(STDIN);
 
 try
 {
 	// Recebe os argumentos do programa
-	$bootstrap = new Bootstrap($argv);
+	$bootstrap = new Bootstrap(__DIR__, $argv);
 
-	//* Inicializa a aplicação e prepara os dispositivos de saída
-	$app = new App;
-	$kernel = $app->make($bootstrap->makeKernelClass(), $bootstrap->args);
-	$kernel->output = $console;
+	//* Inicializa a aplicação e executa
+	$app = new App($input, $output);
 
-	// Executa a aplicação
-	$app->run($kernel);
+	$app->makeKernel($bootstrap->makeKernelClass(), $bootstrap->args);
+	$app->run();
 }
 catch (\Throwable $e)
 {
-	$console->writeLine();
-	$console->writeLine($e->getMessage());
-	$console->writeLine("File: {$e->getFile()}");
-	$console->writeLine("Line: {$e->getLine()}");
-	$console->writeLine('Stack Trace:');
-	$console->writeLine($e->getTraceAsString());
-	$console->writeLine();
+	$output->writeLine();
+	$output->writeLine($e->getMessage());
+	$output->writeLine("File: {$e->getFile()}");
+	$output->writeLine("Line: {$e->getLine()}");
+	$output->writeLine('Stack Trace:');
+	$output->writeLine($e->getTraceAsString());
+	$output->writeLine();
 }
