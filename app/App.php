@@ -79,12 +79,21 @@ class App implements Runnable
 
 		if ($kernel)
 		{
-			if ($kernel->boot())
+			try
 			{
-				while ($kernel->loop());
+				if ($kernel->boot())
+				{
+					while ($kernel->loop());
+				}
 			}
-
-			$kernel->close();
+			catch (\Exception $e)
+			{
+				throw $e;
+			}
+			finally
+			{
+				$kernel->close();
+			}
 		}
 	}
 

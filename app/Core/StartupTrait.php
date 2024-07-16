@@ -16,6 +16,11 @@ trait StartupTrait
 	protected $table;
 
 	/**
+	 * @var string|int
+	 */
+	protected $primary_key;
+
+	/**
 	 * @var string|array<string>
 	 */
 	protected $column;
@@ -32,7 +37,7 @@ trait StartupTrait
 	 */
 	protected function init(array $args) : void
 	{
-		foreach (getProgramArgKeys() as $key => $required)
+		foreach (array_keys(getProgramArgKeys()) as $key)
 		{
 			$this->$key = $args[$key];
 		}

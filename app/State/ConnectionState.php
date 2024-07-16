@@ -1,7 +1,7 @@
 <?php
 
 namespace App\State;
-use App\Core\ReadTableState;
+
 use PDO;
 use DB\Connection;
 use App\Core\Direction;

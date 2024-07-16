@@ -39,24 +39,12 @@ class Bootstrap
             throw new \Exception('Cannot instantiate a kernel. No mode provided.');
         }
 
-        $acceptedModes = [
-            [
-				'class'		=> HelpApplication::class,
-				'params' 	=> [ '--help', '-h', '-H' ],
-			],
-            [
-				'class'		=> VersionApplication::class,
-				'params' 	=> [ '--version', '-v', '-V' ],
-			],
-            [
-				'class'		=> ReadApplication::class,
-				'params' 	=> [ '--read', '-r' ],
-			],
-        ];
+		$help = require 'help.php';
+        $acceptedModes = $help['modes'];
 
 		foreach ($acceptedModes as $acceptedMode)
 		{
-			if (in_array($mode, $acceptedMode['params']))
+			if (in_array($mode, explode(' ', $acceptedMode['params'])))
 			{
 				return $acceptedMode['class'];
 			}
@@ -74,14 +62,10 @@ class Bootstrap
 	 */
 	protected function initArgs(array $args) : void
 	{
-		$params = [
-			'mode',
-			'schema',
-			'table',
-			'column',
-			'path',
-		];
+		$params = array_keys(getProgramArgKeys());
 		$i = 1;
+
+		array_unshift($params, 'mode');
 
 		foreach ($params as $param)
 		{

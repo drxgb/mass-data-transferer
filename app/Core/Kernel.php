@@ -7,7 +7,6 @@ use App\Cli\Input;
 use App\Cli\Output;
 use App\Contract\Bootable;
 use App\Contract\Closeable;
-use App\Contract\Runnable;
 use App\State\KernelState;
 use App\Util\GetterTrait;
 use App\Util\SetterTrait;

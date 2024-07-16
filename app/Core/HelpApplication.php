@@ -35,7 +35,7 @@ class HelpApplication extends Kernel
 
 			foreach ($help['modes'] as $mode)
 			{
-				$type = $mode['type'];
+				$type = $mode['params'];
 				$description = $mode['description'];
 				$output->writeLine("\t$type\t\t$description");
 			}
@@ -44,9 +44,10 @@ class HelpApplication extends Kernel
 			// Outras opções
 			$output->writeLine('Other options:');
 
-			foreach ($help['options'] as $option => $description)
+			foreach ($help['options'] as $option => $value)
 			{
-				$output->writeLine("\t$option\t\t$description");
+				$description = $value['description'];
+				$output->writeLine("\t$option\t\t\t$description");
 			}
 			$output->writeLine();
 		}

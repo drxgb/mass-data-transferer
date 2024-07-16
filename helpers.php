@@ -49,10 +49,14 @@ function env(string $name, mixed $fallback = null) : mixed
  */
 function getProgramArgKeys() : array
 {
-	return [
-		'schema'	=> true,
-		'table'		=> true,
-		'column'	=> true,
-		'path'		=> false,
-	];
+	$help = require 'help.php';
+	$options = $help['options'];
+	$keys = [];
+
+	foreach ($options as $k => $option)
+	{
+		$keys[$k] = $option['required'];
+	}
+
+	return $keys;
 }

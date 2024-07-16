@@ -18,7 +18,7 @@ class StartupState extends KernelState
 
 		foreach (getProgramArgKeys() as $key => $required)
 		{
-			$keyName = ucfirst($key);
+			$keyName = str_replace('_', ' ', ucfirst($key));
 			if (!$required)
 			{
 				$keyName .= ' (Optional)';
@@ -37,7 +37,7 @@ class StartupState extends KernelState
 						break;
 				}
 
-				$kernel->$key = $value;
+				$kernel->$key = trim($value);
 			}
 			else
 			{
