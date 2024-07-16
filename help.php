@@ -2,6 +2,7 @@
 
 use App\Core\HelpApplication;
 use App\Core\ReadApplication;
+use App\Core\WriteApplication;
 use App\Core\VersionApplication;
 
 
@@ -24,7 +25,7 @@ return [
 			'description'	=> 'Read columns table from a database and save the retrieved data to a JSON file.',
 		],
 		[
-			'class'			=> 'WriteApplication::class',
+			'class'			=> WriteApplication::class,
 			'params' 		=> '--write -w',
 			'description'	=> 'Get data from a JSON file and write them to the database.',
 		],

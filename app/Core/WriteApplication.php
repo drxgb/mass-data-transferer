@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Core;
+
 use App\State\StartupState;
 
 
-class ReadApplication extends StateableKernel
+class WriteApplication extends StateableKernel
 {
 	use StartupTrait;
-
 
 	/**
 	 * @return bool
@@ -18,10 +18,10 @@ class ReadApplication extends StateableKernel
 		$this->assertOutputExists();
 
 		$this->app->showTitle();
-		$this->output->writeLine('*** Read mode ***');
+		$this->output->writeLine('*** Write mode ***');
 		$this->output->writeLine('=================');
 		$this->output->writeLine();
-		$this->state = new StartupState($this);
+		$this->state = new StartupState($this, Direction::WRITE);
 
 		return true;
 	}

@@ -29,8 +29,8 @@ class WriteFileState extends FileState
 
 		$output->writeLine("Writing data to $file");
 		file_put_contents($file, json_encode($data));
-		$output->writeLine('Wrote successfully!');
 
-		$kernel->state = null;
+		$output->writeLine('Wrote successfully!');
+		$kernel->finish();
 	}
 }

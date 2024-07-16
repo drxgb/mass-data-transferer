@@ -37,11 +37,11 @@ class DataRepository
 	/**
 	 * Escreve as linhas para uma tabela.
 	 *
-	 * @param int $id
+	 * @param int|string $id
 	 * @param mixed $value
 	 * @return void
 	 */
-	public function write(int $id, mixed $value) : void
+	public function write(int|string $id, mixed $value) : void
 	{
 		$table = $this->table;
 		$column = $this->column;

@@ -12,6 +12,13 @@ abstract class FileState extends KernelState
 	 */
 	protected function getFile() : string
 	{
-		return $this->kernel->path ?: config('storage.default');
+		$path = $this->kernel->path;
+
+		if (!empty($path))
+		{
+			return config('storage.app_dir') . $path;
+		}
+
+		return config('storage.default');
 	}
 }

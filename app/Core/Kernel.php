@@ -43,9 +43,25 @@ abstract class Kernel
 	}
 
 
+	/**
+	 * Executa uma única tarefa.
+	 *
+	 * @return void
+	 */
 	public function runStep() : void
 	{
 		$this->loop();
+	}
+
+
+	/**
+	 * Sinaliza o fim das tarefas.
+	 *
+	 * @return void
+	 */
+	public function finish() : void
+	{
+		$this->state = null;
 	}
 
 

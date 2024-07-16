@@ -42,9 +42,13 @@ class ConnectionState extends KernelState
 		{
 			$kernel->state = new ReadTableState($kernel, $direction);
 		}
+		else if ($direction === Direction::WRITE)
+		{
+			$kernel->state = new ReadFileState($kernel);
+		}
 		else
 		{
-			$kernel->state = null;
+			$kernel->finish();
 		}
 	}
 }
