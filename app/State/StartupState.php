@@ -2,6 +2,7 @@
 
 namespace App\State;
 
+use App\Core\Direction;
 use App\Core\Kernel;
 
 
@@ -45,7 +46,20 @@ class StartupState extends KernelState
 			}
 		}
 
+		if ($this->direction === Direction::READ)
+		{
+			$includeNull = '';
+			while ($includeNull !== 'Y' && $includeNull !== 'N')
+			{
+				$output->write('Include null values? [Y/N]: ');
+				$includeNull = strtoupper($input->read());
+				$output->writeLine();
+			}
+
+			$kernel->setOption('include_null', $includeNull === 'Y');
+		}
 		$output->writeLine();
+
 		$this->kernel->state = new ConnectionState($kernel, $this->direction);
 	}
 }

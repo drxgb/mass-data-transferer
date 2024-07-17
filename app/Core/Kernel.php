@@ -33,6 +33,11 @@ abstract class Kernel
 	 */
 	private $input;
 
+	/**
+	 * @var array<mixed>
+	 */
+	private $options;
+
 
 	public function __construct(
 		private App $app,
@@ -40,6 +45,32 @@ abstract class Kernel
 	)
 	{
 		$this->init($args);
+		$this->options = [];
+	}
+
+
+	/**
+	 * Recebe a opção.
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function getOption(string $name) : mixed
+	{
+		return $this->options[$name] ?? null;
+	}
+
+
+	/**
+	 * Define um valor à uma opção.
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function setOption(string $name, mixed $value) : void
+	{
+		$this->options[$name] = $value;
 	}
 
 
@@ -112,6 +143,7 @@ abstract class Kernel
 	{
 		return [
 			'app',
+			'options',
 		];
 	}
 

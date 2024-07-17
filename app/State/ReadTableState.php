@@ -14,6 +14,7 @@ class ReadTableState extends KernelState
 	{
 		$kernel = $this->kernel;
 		$output = $kernel->output;
+		$includeNull = $kernel->getOption('include_null') ?? false;
 
 		$db = $kernel->app->db->pdo;
 		$table = $kernel->table;
@@ -28,7 +29,11 @@ class ReadTableState extends KernelState
 		{
 			$key = $row[$primaryKey];
 			$value = $row[$column];
-			$data[$key] = $value;
+
+			if ($value || (is_null($value) && $includeNull))
+			{
+				$data[$key] = $value;
+			}
 		}
 
 		$kernel->state = new WriteFileState($kernel, $data ?? []);

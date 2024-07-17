@@ -35,7 +35,7 @@ class WriteTableState extends KernelState
 		$output->writeLine("Updating $table table...");
 		foreach ($this->data as $key => $value)
 		{
-			$output->write("[$key] -> $column...");
+			$output->write("[$key] -> $column = $value...");
 			$repository->write($key, $value);
 			$output->writeLine(' OK!');
 		}
